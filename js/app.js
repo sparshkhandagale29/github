@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'assets/bedroom/DSC02058 copy.jpg.jpeg',
       'assets/bedroom/DSC02549 copy.jpg'
     ],
-    'living-room': [
+    'LIVING ROOM': [
       'assets/living-room/A9P03089.jpg',
       'assets/living-room/A9P03464.jpg',
       'assets/living-room/A9P04328.jpg',
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'assets/bespoke-spaces/DSC02214 copy.jpg',
       'assets/bespoke-spaces/DSC02345 copy.jpg'
     ],
-    'dining-area': [
+    'DINING AREA': [
       'assets/dining-area/A9P03058.jpg',
       'assets/dining-area/A9P03068.jpg',
       'assets/dining-area/A9P04383.jpg',
