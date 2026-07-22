@@ -437,6 +437,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightboxCloseBtn = document.querySelector('.lightbox-close');
 
   if (lightbox && lightboxImg && lightboxCloseBtn) {
+    // Preload high-res image exactly when the user hovers over the thumbnail
+    document.body.addEventListener('mouseover', (e) => {
+      if (e.target && e.target.classList && e.target.classList.contains('portfolio-img-uncropped')) {
+        const fullSrc = e.target.getAttribute('data-fullsrc');
+        if (fullSrc) {
+          const tempImg = new Image();
+          tempImg.src = fullSrc; // Starts downloading instantly before they even click
+        }
+      }
+    });
+
     // Open lightbox when an image is clicked
     document.body.addEventListener('click', (e) => {
       if (e.target.classList.contains('portfolio-img-uncropped')) {
