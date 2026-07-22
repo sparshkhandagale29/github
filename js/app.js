@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'assets/bedroom/DSC02058 copy.jpg.jpeg',
       'assets/bedroom/DSC02549 copy.jpg'
     ],
-    'LIVING ROOM': [
+    'living-room': [
       'assets/living-room/A9P03089.jpg',
       'assets/living-room/A9P03464.jpg',
       'assets/living-room/A9P04328.jpg',
@@ -345,7 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'assets/bespoke-spaces/DSC02214 copy.jpg',
       'assets/bespoke-spaces/DSC02345 copy.jpg'
     ],
-    'DINING AREA': [
+    'dining-area': [
       'assets/dining-area/A9P03058.jpg',
       'assets/dining-area/A9P03068.jpg',
       'assets/dining-area/A9P04383.jpg',
@@ -360,20 +360,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!categoryModal) return;
     try {
       modalTitle.textContent = categoryName;
-      modalGrid.innerHTML = ''; // Clear existing
       
-      // Inject images
-      const imagesToLoad = categoryAssets[categoryName] || [];
-      imagesToLoad.forEach(src => {
-        const img = document.createElement('img');
-        img.src = src;
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.classList.add('modal-grid-item', 'portfolio-img-uncropped');
-        img.setAttribute('data-fullsrc', src);
-        img.loading = 'lazy';
-        img.decoding = 'async'; // Zero lag loading
-        modalGrid.appendChild(img);
+      const safeName = categoryName.replace(/\s+/g, '-').toUpperCase();
+      
+      // Toggle standard grid display across statically pre-loaded HTML containers
+      const containers = document.querySelectorAll('.modal-category-container');
+      containers.forEach(container => {
+        if (container.id === 'modal-cat-' + safeName) {
+          container.style.display = 'grid';
+        } else {
+          container.style.display = 'none';
+        }
       });
       
       categoryModal.style.cssText = "display: flex !important; visibility: visible !important; opacity: 1 !important; z-index: 99999 !important;";
@@ -574,6 +571,35 @@ document.addEventListener('DOMContentLoaded', () => {
               openFullGalleryLightbox(src);
           }
       });
+  });
+
+  // --- Asynchronous Sequential Image Preloader ---
+  // Preloads all portfolio images one by one AFTER the main page load.
+  // Stops lag on phones but allows instant opening of portfolio items!
+  window.addEventListener('load', () => {
+    const allImages = [];
+    document.querySelectorAll('.portfolio-img-uncropped').forEach(img => {
+      const src = img.getAttribute('data-fullsrc') || img.src;
+      if (src && !allImages.includes(src)) {
+        allImages.push(src);
+      }
+    });
+
+    let index = 0;
+    function preloadNextImage() {
+      if (index >= allImages.length) return;
+      
+      setTimeout(() => {
+        const tempImg = new Image();
+        tempImg.onload = preloadNextImage;
+        tempImg.onerror = preloadNextImage;
+        tempImg.src = allImages[index];
+        index++;
+      }, 500); // 500ms pause to give the phone's CPU time to breathe
+    }
+
+    // Start preloading after 3s to let the phone fully finish loading the page first
+    setTimeout(preloadNextImage, 3000);
   });
 
 }); // END DOMContentLoaded
