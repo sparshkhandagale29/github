@@ -478,7 +478,10 @@
 }
 
 .about-right {
-  padding: 20px clamp(36px, 6vw, 90px) clamp(80px, 12vh, 140px);
+  padding-top: 20px;
+  padding-left: clamp(36px, 6vw, 90px);
+  padding-right: clamp(36px, 6vw, 90px);
+  padding-bottom: clamp(80px, 12vh, 140px);
   display: flex;
   flex-direction: column;
   gap: 64px;
