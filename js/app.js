@@ -361,17 +361,22 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       modalTitle.textContent = categoryName;
       
-      const safeName = categoryName.replace(/\s+/g, '-').toUpperCase();
-      
-      // Toggle standard grid display across statically pre-loaded HTML containers
-      const containers = document.querySelectorAll('.modal-category-container');
-      containers.forEach(container => {
-        if (container.id === 'modal-cat-' + safeName) {
-          container.style.display = 'grid';
-        } else {
-          container.style.display = 'none';
+      // Dynamically populate images
+      if (modalGrid) {
+        modalGrid.innerHTML = '';
+        const images = categoryData[categoryName.toUpperCase()];
+        if (images && images.length > 0) {
+          images.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = categoryName;
+            img.className = 'portfolio-img-uncropped';
+            img.loading = 'lazy';
+            img.setAttribute('data-fullsrc', src);
+            modalGrid.appendChild(img);
+          });
         }
-      });
+      }
       
       categoryModal.style.cssText = "display: flex !important; visibility: visible !important; opacity: 1 !important; z-index: 99999 !important;";
       document.body.style.overflow = 'hidden';
