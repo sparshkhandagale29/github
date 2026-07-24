@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
       
-      categoryModal.style.cssText = "display: flex !important; visibility: visible !important; opacity: 1 !important; z-index: 99999 !important;";
+      categoryModal.style.cssText = "display: flex !important; visibility: visible !important; opacity: 1 !important; z-index: 9999999 !important;";
       document.body.style.overflow = 'hidden';
     } catch (e) {
       console.error(e);
